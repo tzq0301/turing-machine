@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
+#include <fstream>
 #include <exception>
 #include <iostream>
 #include <stdexcept>
@@ -8,8 +9,8 @@
 #include <variant>
 #include <vector>
 
-#include "tm/cli/cli.h"
-#include "tm/log/log.hpp"
+#include "turing/cli/cli.h"
+#include "turing/log/log.hpp"
 
 int main(int argc, const char **argv) {
   turing::cli::Option option;
@@ -32,6 +33,14 @@ int main(int argc, const char **argv) {
   if (runOption.verbose) {
     turing::log::enable();
   }
+
+//  std::ifstream file(runOption.tm);
+//  assert(file.is_open());
+//  std::vector<std::string> lines;
+//  std::string line;
+//  while (std::getline(file, line)) {
+//    lines.emplace_back(line);
+//  }
 
   // TODO
 
