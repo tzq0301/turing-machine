@@ -1,12 +1,28 @@
 #include <chrono>
+#include <exception>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 namespace log {
 namespace {
 bool enable_ = false;
+
+enum class Level {
+  INFO, ERROR
+};
+
+std::string to_string(Level level) {
+  switch (level) {
+  case Level::INFO:
+    return "INFO ";
+  case Level::ERROR:
+    return "ERROR";
+  }
+  throw std::invalid_argument("level should be one of INFO, ERROR");
+}
 
 std::string currentDateTime() {
   auto now = std::chrono::system_clock::now();
@@ -18,11 +34,11 @@ std::string currentDateTime() {
 }
 
 template <typename... Args>
-void log(std::ostream &out, Args... args) {
+void log(std::ostream &out, Level level, Args... args) {
   if (!enable_) {
     return;
   }
-  out << "[" << currentDateTime() << "] ";
+  out << "[" << to_string(level) << "] [" << currentDateTime() << "] ";
   (out << ... << args) << std::endl;
 }
 } // namespace
@@ -33,12 +49,12 @@ void enable() {
 
 template <typename... Args>
 void info(Args... args) {
-  log(std::cout, args...);
+  log(std::cout, Level::INFO, args...);
 }
 
 template <typename... Args>
 void error(Args... args) {
-  log(std::cerr, args...);
+  log(std::cerr, Level::ERROR, args...);
 }
 
 } // namespace log
