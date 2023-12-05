@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace log {
+namespace turing::log {
 namespace {
 bool enable_ = false;
 

@@ -14,4 +14,4 @@ add_link_options(-fsanitize=address)
 
 include_directories(turing-project)
 
-add_executable(${CMAKE_PROJECT_NAME} turing-project/main.cpp turing-project/cli/cli.cpp)
+add_executable(${CMAKE_PROJECT_NAME} turing-project/main.cpp turing-project/tm/cli/cli.cpp)

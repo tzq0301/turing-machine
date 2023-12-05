@@ -1,8 +1,9 @@
-#include "cli/cli.h"
+#include "tm/cli/cli.h"
 
 #include <vector>
 
-Option parseArgs(int argc, const char **argv) {
+namespace turing::cli {
+turing::cli::Option parseArgs(int argc, const char **argv) {
   static const std::string ILLEGAL_INPUT_STRING_MESSAGE = "illegal input string";
   static const std::string HELP_MESSAGE = "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
 
@@ -19,8 +20,9 @@ Option parseArgs(int argc, const char **argv) {
     throw std::invalid_argument(ILLEGAL_INPUT_STRING_MESSAGE);
   }
 
-  if (std::find(args.begin(), args.end(), "-h") != args.end() || std::find(args.begin(), args.end(), "--help") != args.end()) {
-    return HelpOption{
+  if (std::find(args.begin(), args.end(), "-h") != args.end() ||
+      std::find(args.begin(), args.end(), "--help") != args.end()) {
+    return turing::cli::HelpOption{
         .message = HELP_MESSAGE,
     };
   }
@@ -29,15 +31,17 @@ Option parseArgs(int argc, const char **argv) {
     throw std::invalid_argument(ILLEGAL_INPUT_STRING_MESSAGE);
   }
 
-  RunOption runOption = {
+  turing::cli::RunOption runOption = {
       .verbose = false,
       .tm = args[args.size() - 2],
       .input = args[args.size() - 1],
   };
 
-  if (std::find(args.begin(), args.end(), "-v") != args.end() || std::find(args.begin(), args.end(), "--verbose") != args.end()) {
+  if (std::find(args.begin(), args.end(), "-v") != args.end() ||
+      std::find(args.begin(), args.end(), "--verbose") != args.end()) {
     runOption.verbose = true;
   }
 
   return runOption;
 }
+} // namespace turing::cli
