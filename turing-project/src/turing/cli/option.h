@@ -15,6 +15,4 @@ struct HelpOption {
 };
 
 using Option = std::variant<RunOption, HelpOption>;
-
-Option parseArgs(int argc, const char **argv);
 } // namespace turing::cli

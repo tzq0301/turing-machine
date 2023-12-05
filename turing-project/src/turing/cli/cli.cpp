@@ -4,11 +4,11 @@
 
 namespace turing::cli {
 turing::cli::Option parseArgs(int argc, const char **argv) {
-  static const std::string ILLEGAL_INPUT_STRING_MESSAGE = "illegal input string";
+  static const std::string ILLEGAL_ARGS_MESSAGE = "illegal args";
   static const std::string HELP_MESSAGE = "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
 
   if (argc == 1) {
-    throw std::invalid_argument(ILLEGAL_INPUT_STRING_MESSAGE);
+    throw std::invalid_argument(ILLEGAL_ARGS_MESSAGE);
   }
 
   std::vector<std::string> args;
@@ -17,7 +17,7 @@ turing::cli::Option parseArgs(int argc, const char **argv) {
   }
 
   if (args.empty()) {
-    throw std::invalid_argument(ILLEGAL_INPUT_STRING_MESSAGE);
+    throw std::invalid_argument(ILLEGAL_ARGS_MESSAGE);
   }
 
   if (std::find(args.begin(), args.end(), "-h") != args.end() ||
@@ -28,7 +28,7 @@ turing::cli::Option parseArgs(int argc, const char **argv) {
   }
 
   if (args.size() < 2) {
-    throw std::invalid_argument(ILLEGAL_INPUT_STRING_MESSAGE);
+    throw std::invalid_argument(ILLEGAL_ARGS_MESSAGE);
   }
 
   turing::cli::RunOption runOption = {

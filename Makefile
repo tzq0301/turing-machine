@@ -1,4 +1,4 @@
-.PHONY: build run clean
+.PHONY: build test clean
 
 build:
 	bash build.sh
@@ -8,7 +8,10 @@ build:
 #
 # help: build
 # 	bash run.sh -h
-	
+
+test: build
+	@./bin/test_statement_parser
+
 clean:
 	rm -rf ./bin
 	rm -rf ./build
