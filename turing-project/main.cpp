@@ -8,21 +8,8 @@
 #include <variant>
 #include <vector>
 
+#include "cli/cli.h"
 #include "log/log.hpp"
-
-struct RunOption {
-  bool verbose;
-  std::string tm;
-  std::string input;
-};
-
-struct HelpOption {
-  std::string message;
-};
-
-using Option = std::variant<RunOption, HelpOption>;
-
-Option parseArgs(int argc, const char **argv);
 
 int main(int argc, const char **argv) {
   Option option;
@@ -30,6 +17,7 @@ int main(int argc, const char **argv) {
   try {
     option = parseArgs(argc, argv);
   } catch (const std::invalid_argument &e) {
+    std::cerr << e.what() << "\n";
     exit(EXIT_FAILURE);
   }
 
@@ -45,43 +33,7 @@ int main(int argc, const char **argv) {
     log::enable();
   }
 
-  log::info("tm:    " + runOption.tm);
-  log::info("input: " + runOption.input);
-
-  exit(EXIT_SUCCESS);
-}
-
-Option parseArgs(int argc, const char **argv) {
-  std::vector<std::string> args;
-  for (size_t i = 1; i < argc; ++i) {
-    args.emplace_back(argv[i]);
-  }
-
-  if (args.empty()) {
-    throw std::invalid_argument("need parse arguments");
-  }
-
-  if (std::find(args.begin(), args.end(), "-h") != args.end() || std::find(args.begin(), args.end(), "--help") != args.end()) {
-    return HelpOption{
-      .message = "usage: turing [-v|--verbose] [-h|--help] <tm> <input>",
-    };
-  }
-
-  if (args.size() < 2) {
-    throw std::invalid_argument("invalid arguments");
-  }
-
-  RunOption runOption = {
-    .verbose = false,
-    .tm = args[args.size() - 2],
-    .input = args[args.size() - 1],
-  };
-
-  if (std::find(args.begin(), args.end(), "-v") != args.end() || std::find(args.begin(), args.end(), "--verbose") != args.end()) {
-    runOption.verbose = true;
-  }
-
   // TODO
 
-  return runOption;
+  exit(EXIT_SUCCESS);
 }
