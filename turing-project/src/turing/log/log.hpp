@@ -1,3 +1,5 @@
+#pragma once
+
 #include <chrono>
 #include <exception>
 #include <iomanip>
@@ -7,21 +9,18 @@
 #include <string>
 
 namespace turing::log {
-namespace {
-bool enable_ = false;
+void enable();
+bool isEnable();
 
+namespace {
 template <typename... Args>
 void log(std::ostream &out, Args... args) {
-  if (!enable_) {
+  if (!isEnable()) {
     return;
   }
   (out << ... << args) << std::endl;
 }
 } // namespace
-
-void enable() {
-  enable_ = true;
-}
 
 template <typename... Args>
 void info(Args... args) {

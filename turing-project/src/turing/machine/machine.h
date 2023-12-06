@@ -18,6 +18,8 @@ public:
       size_t nTape,
       std::unordered_map<std::string, std::vector<turing::machine::Transition>> transitions);
 
+  void run(const std::string &input);
+
   std::string to_string();
 
 private:
@@ -29,5 +31,7 @@ private:
   std::unordered_set<std::string> finalStates_; // 终结状态集  F
   size_t nTape_;                                // 纸带数     N
   std::unordered_map<std::string, std::vector<turing::machine::Transition>> transitions_; // 状态函数 delta
+
+  std::variant<bool, size_t> isInputValid(const std::string &input);
 };
 } // namespace turing::machine

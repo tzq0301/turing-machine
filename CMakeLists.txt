@@ -16,6 +16,7 @@ include_directories(turing-project/src)
 
 add_executable(${CMAKE_PROJECT_NAME} turing-project/src/main.cpp
     turing-project/src/turing/cli/cli.cpp
+    turing-project/src/turing/log/log.cpp
     turing-project/src/turing/machine/direction.cpp
     turing-project/src/turing/machine/machine.cpp
     turing-project/src/turing/parser/statement_parser.cpp

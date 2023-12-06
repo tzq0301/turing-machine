@@ -29,3 +29,13 @@ size_t turing::util::string::to_size_t(const std::string number) {
     return sizeT;
   }
 }
+
+std::string turing::util::string::times(std::string base, size_t time) {
+  std::string s;
+
+  for (size_t i = 0; i < time; ++i) {
+    s += base;
+  }
+
+  return s;
+}

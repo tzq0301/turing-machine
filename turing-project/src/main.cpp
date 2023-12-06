@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <exception>
+#include <ios>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -10,6 +11,7 @@
 
 #include "turing/cli/cli.h"
 #include "turing/log/log.hpp"
+#include "turing/machine/exception.h"
 #include "turing/machine/machine.h"
 #include "turing/parser/parser.hpp"
 
@@ -37,9 +39,15 @@ int main(int argc, const char **argv) {
 
   turing::machine::Machine tm = turing::parser::parse(runOption.tm);
   
+//  std::cout << std::boolalpha << std::get<bool>(tm.isInputValid("1001001")) << "\n";
+
   // std::cout << tm.to_string();
   
-  // TODO tape
+  try {
+    tm.run(runOption.input);
+  } catch (const turing::machine::InvalidInputException &e) {
+    exit(EXIT_FAILURE);
+  }
 
   exit(EXIT_SUCCESS);
 }

@@ -11,6 +11,7 @@ const char COMMA = ',';
 const char SPACE = ' ';
 const char EQUAL = '=';
 const char SHARP = '#';
+const char UPARROW = '^';
 const char SEMICOLON = ';';
 const char UNDERSCORE = '_';
 const char LEFT_BRACKET = '{';
@@ -23,4 +24,6 @@ std::string rtrim(const std::string &s);
 std::string trim(const std::string &s);
 
 size_t to_size_t(const std::string number);
+
+std::string times(std::string base, size_t time);
 } // namespace turing::util::string
