@@ -11,26 +11,28 @@
 #include "turing/parser/result.h"
 #include "turing/util/string.h"
 
-turing::parser::StatementParser::StatementParser(std::string statement) : statement_(std::move(turing::util::string::trim(statement))), index_(0) {}
+namespace turing::parser {
 
-turing::parser::StatementResult turing::parser::StatementParser::parse() {
-  if (this->isEmptyLine()) {
+StatementParser::StatementParser(std::string statement) : statement_(std::move(turing::util::string::trim(statement))), index_(0) {}
+
+StatementResult StatementParser::parse() {
+  if (isEmptyLine()) {
     return EmptyStatementResult{};
   }
   
-  if (this->isComment()) {
+  if (isComment()) {
     return CommentStatementResult{};
   }
   
-  if (this->peekNextChar() == turing::util::string::SHARP) {
-    this->mustNextChar(); // discord '#'
-    return this->parseNormalStatement();
+  if (peekNextChar() == turing::util::string::SHARP) {
+    mustNextChar(); // discord '#'
+    return parseNormalStatement();
   } else {
-    return this->parseTransitionStatement();
+    return parseTransitionStatement();
   }
 }
 
-turing::parser::StatesResult turing::parser::StatementParser::parseStates() {
+StatesResult StatementParser::parseStates() {
   mustSkipLeftBracket();
   
   std::unordered_set<std::string> states;
@@ -42,23 +44,23 @@ turing::parser::StatesResult turing::parser::StatementParser::parseStates() {
     }
     states.insert(state);
     
-    char ch = this->peekNextChar();
+    char ch = peekNextChar();
     if (ch == turing::util::string::RIGHT_BRACKET) {
-      this->mustNextChar(); // discord '}'
+      mustNextChar(); // discord '}'
       break;
     }
     if (ch != turing::util::string::COMMA) {
       throw InvalidSyntaxException("should be a comma");
     }
-    this->mustNextChar();
+    mustNextChar();
   } while (true);
   
-  return turing::parser::StatesResult {
+  return {
     .states = states,
   };
 }
 
-turing::parser::InputAlphabetResult turing::parser::StatementParser::parseInputAlphabet() {
+InputAlphabetResult StatementParser::parseInputAlphabet() {
   static std::function<bool(char)> isSignValid = [](char ch) {
     if (!isprint(ch)) {
       return false;
@@ -88,23 +90,23 @@ turing::parser::InputAlphabetResult turing::parser::StatementParser::parseInputA
     }
     alphabet.insert(ch);
     
-    ch = this->peekNextChar();
+    ch = peekNextChar();
     if (ch == turing::util::string::RIGHT_BRACKET) {
-      this->mustNextChar(); // discord '}'
+      mustNextChar(); // discord '}'
       break;
     }
     if (ch != turing::util::string::COMMA) {
       throw InvalidSyntaxException("should be a comma");
     }
-    this->mustNextChar();
+    mustNextChar();
   } while (true);
   
-  return turing::parser::InputAlphabetResult {
+  return {
     .inputAlphabet = alphabet,
   };
 }
 
-turing::parser::TapeAlphabetResult turing::parser::StatementParser::parseTapeAlphabet() {
+TapeAlphabetResult StatementParser::parseTapeAlphabet() {
   static std::function<bool(char)> isSignValid = [](char ch) {
     if (!isprint(ch)) {
       return false;
@@ -127,105 +129,105 @@ turing::parser::TapeAlphabetResult turing::parser::StatementParser::parseTapeAlp
   std::unordered_set<char> alphabet;
 
   do {
-    char ch = this->mustNextChar();
+    char ch = mustNextChar();
     if (!isSignValid(ch)) {
       throw InvalidSyntaxException("sign not valid");
     }
     alphabet.insert(ch);
 
-    ch = this->peekNextChar();
+    ch = peekNextChar();
     if (ch == turing::util::string::RIGHT_BRACKET) {
-      this->mustNextChar(); // discord '}'
+      mustNextChar(); // discord '}'
       break;
     }
     if (ch != turing::util::string::COMMA) {
       throw InvalidSyntaxException("should be a comma");
     }
-    this->mustNextChar();
+    mustNextChar();
   } while (true);
 
-  return turing::parser::TapeAlphabetResult {
+  return {
       .tapeAlphabet = alphabet,
   };
 }
 
-turing::parser::StartStateResult turing::parser::StatementParser::parseStartState() {
-  return turing::parser::StartStateResult {
+StartStateResult StatementParser::parseStartState() {
+  return {
     .startState = mustNextToken(),
   };
 }
 
-turing::parser::FinalStatesResult turing::parser::StatementParser::parseFinalStates() {
+FinalStatesResult StatementParser::parseFinalStates() {
   mustSkipLeftBracket();
 
   std::unordered_set<std::string> states;
 
   do {
-    std::string state = this->mustNextToken();
+    std::string state = mustNextToken();
     
     if (state.empty()) {
       throw InvalidSyntaxException("should be a non-empty token");
     }
     states.insert(state);
 
-    char ch = this->peekNextChar();
+    char ch = peekNextChar();
     if (ch == turing::util::string::RIGHT_BRACKET) {
-      this->mustNextChar(); // discord '}'
+      mustNextChar(); // discord '}'
       break;
     }
     if (ch != turing::util::string::COMMA) {
       throw InvalidSyntaxException("should be a comma");
     }
-    this->mustNextChar();
+    mustNextChar();
   } while (true);
 
-  return turing::parser::FinalStatesResult {
+  return FinalStatesResult {
       .finalStates = states,
   };
 }
 
-turing::parser::BlankSymbolResult turing::parser::StatementParser::parseBlankSymbol() {
-  return turing::parser::BlankSymbolResult {
+BlankSymbolResult StatementParser::parseBlankSymbol() {
+  return {
     .blankSymbol = mustNextChar(),
   };
 }
 
-turing::parser::NTapeResult turing::parser::StatementParser::parseNTape() {
-  return turing::parser::NTapeResult {
+NTapeResult StatementParser::parseNTape() {
+  return {
       .nTape = turing::util::string::to_size_t(mustNextToken()),
   };
 }
 
 turing::parser::NormalStatementResult turing::parser::StatementParser::parseNormalStatement() {
-  char sign = this->mustNextChar();
+  char sign = mustNextChar();
   if (sign == 'q') {
     mustNextChar(); // 0 of q0
   }
-  this->mustSkipSpace();
-  this->mustSkipEqualSign();
-  this->mustSkipSpace();
+  mustSkipSpace();
+  mustSkipEqualSign();
+  mustSkipSpace();
   
   switch (sign) {
   case 'Q':
-    return this->parseStates();
+    return parseStates();
   case 'S':
-    return this->parseInputAlphabet();
+    return parseInputAlphabet();
   case 'G':
-    return this->parseTapeAlphabet();
+    return parseTapeAlphabet();
   case 'q':
-    return this->parseStartState();
+    return parseStartState();
   case 'B':
-    return this->parseBlankSymbol();
+    return parseBlankSymbol();
   case 'F':
-    return this->parseFinalStates();
+    return parseFinalStates();
   case 'N':
-    return this->parseNTape();
+    return parseNTape();
   default:
     throw std::invalid_argument("sign not match");
   }
 }
 
-turing::parser::TransitionStatementResult turing::parser::StatementParser::parseTransitionStatement() {
+TransitionStatementResult StatementParser::parseTransitionStatement() {
   turing::machine::Transition transition {
     .oldSigns   = std::vector<char>{},
     .newSigns   = std::vector<char>{},
@@ -247,7 +249,7 @@ turing::parser::TransitionStatementResult turing::parser::StatementParser::parse
   mustSkipSpace();
   
   static std::function<void(std::vector<turing::machine::Direction> &)> readDirections = [this](std::vector<turing::machine::Direction> &directions) {
-    while (this->peekNextChar() != turing::util::string::SPACE) {
+    while (peekNextChar() != turing::util::string::SPACE) {
       char ch = this->mustNextChar();
       switch (ch){
       case 'l':
@@ -267,20 +269,20 @@ turing::parser::TransitionStatementResult turing::parser::StatementParser::parse
   mustSkipSpace();
   transition.newState = mustNextToken();
   
-  return turing::parser::TransitionStatementResult {
+  return {
     .transition = transition,
   };
 }
 
-std::string turing::parser::StatementParser::mustNextToken() {
+std::string StatementParser::mustNextToken() {
   std::string s;
   
-  while (!this->reachEnd()) {
-    char ch = this->peekNextChar();
+  while (!reachEnd()) {
+    char ch = peekNextChar();
     
     if (std::isalnum(ch) || ch == turing::util::string::UNDERSCORE) {
       s += ch;
-      this->mustNextChar();
+      mustNextChar();
       continue;
     }
     
@@ -290,62 +292,63 @@ std::string turing::parser::StatementParser::mustNextToken() {
   return s;
 }
 
-char turing::parser::StatementParser::peekNextChar() const {
-  if (this->reachEnd()) {
+char StatementParser::peekNextChar() const {
+  if (reachEnd()) {
     throw InvalidSyntaxException("End of Statement");
   }
-  return this->statement_[this->index_];
+  return statement_[index_];
 }
 
-char turing::parser::StatementParser::mustNextChar() {
-  if (this->reachEnd()) {
+char StatementParser::mustNextChar() {
+  if (reachEnd()) {
     throw InvalidSyntaxException("End of Statement");
   }
-  return this->statement_[this->index_++];
+  return statement_[index_++];
 }
 
-void turing::parser::StatementParser::mustSkipSpace() {
-  if (this->mustNextChar() != turing::util::string::SPACE) {
+void StatementParser::mustSkipSpace() {
+  if (mustNextChar() != turing::util::string::SPACE) {
     throw InvalidSyntaxException("should have a space ( )");
   }
 }
 
-void turing::parser::StatementParser::mustSkipComma() {
-  if (this->mustNextChar() != turing::util::string::COMMA) {
+void StatementParser::mustSkipComma() {
+  if (mustNextChar() != turing::util::string::COMMA) {
     throw InvalidSyntaxException("should have a comma (,)");
   }
 }
 
-void turing::parser::StatementParser::mustSkipEqualSign() {
-  if (this->mustNextChar() != turing::util::string::EQUAL) {
+void StatementParser::mustSkipEqualSign() {
+  if (mustNextChar() != turing::util::string::EQUAL) {
     throw InvalidSyntaxException("should have a equal (=)");
   }
 }
 
-void turing::parser::StatementParser::mustSkipLeftBracket() {
-  if (this->mustNextChar() != turing::util::string::LEFT_BRACKET) {
+void StatementParser::mustSkipLeftBracket() {
+  if (mustNextChar() != turing::util::string::LEFT_BRACKET) {
     throw InvalidSyntaxException("should have a left bracket ({)");
   }
 }
 
-void turing::parser::StatementParser::mustSkipRightBracket() {
-  if (this->mustNextChar() != turing::util::string::RIGHT_BRACKET) {
+void StatementParser::mustSkipRightBracket() {
+  if (mustNextChar() != turing::util::string::RIGHT_BRACKET) {
     throw InvalidSyntaxException("should have a right bracket (})");
   }
 }
 
-bool turing::parser::StatementParser::isEmptyLine() const {
-  return this->statement_ == "";
+bool StatementParser::isEmptyLine() const {
+  return statement_ == "";
 }
 
-bool turing::parser::StatementParser::isComment() const {
-  return !this->statement_.empty() && this->statement_[0] == turing::util::string::SEMICOLON;
+bool StatementParser::isComment() const {
+  return !statement_.empty() && statement_[0] == turing::util::string::SEMICOLON;
 }
 
-bool turing::parser::StatementParser::reachEnd() const {
-  return this->statement_.size() == this->index_;
+bool StatementParser::reachEnd() const {
+  return statement_.size() == index_;
 }
 
-turing::parser::StatementResult turing::parser::parseStatement(const std::string &statement) {
+StatementResult parseStatement(const std::string &statement) {
   return StatementParser{statement}.parse();
+}
 }

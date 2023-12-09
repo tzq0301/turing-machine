@@ -19,7 +19,7 @@ template <class... Ts> overload(Ts...) -> overload<Ts...>;
 
 class Parser {
 public:
-  explicit Parser(std::string &filepath)
+  explicit Parser(const std::string &filepath)
       : statements_(turing::util::file::readLines(filepath)), index_(0) {}
 
   turing::machine::Machine parse() {
@@ -87,16 +87,9 @@ private:
   const std::vector<std::string> statements_;
   size_t index_;
 
-  std::optional<std::string> nextStatement() {
-    if (this->index_ == this->statements_.size()) {
-      return std::nullopt;
-    }
-
-    return this->statements_[this->index_++];
-  }
+  std::optional<std::string> nextStatement();
 };
 
-machine::Machine parse(std::string &filepath) {
-  return Parser{filepath}.parse();
-}
+turing::machine::Machine parse(const std::string &filepath);
+
 } // namespace turing::parser

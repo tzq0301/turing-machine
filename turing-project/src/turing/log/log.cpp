@@ -1,11 +1,11 @@
 #include "turing/log/log.hpp"
 
-bool enable_ = false;
+bool verbose_ = false;
 
-void turing::log::enable() {
-  enable_ = true;
+void turing::log::verbose() {
+  verbose_ = true;
 }
 
-bool turing::log::isEnable() {
-  return enable_;
+bool turing::log::isVerbose() {
+  return verbose_;
 }

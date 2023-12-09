@@ -9,27 +9,28 @@
 #include <string>
 
 namespace turing::log {
-void enable();
-bool isEnable();
+void verbose();
+bool isVerbose();
 
 namespace {
-template <typename... Args>
+template <bool newline = true, typename... Args>
 void log(std::ostream &out, Args... args) {
-  if (!isEnable()) {
-    return;
+//  (out << ... << args) << std::endl;
+  (out << ... << args);
+  if constexpr (newline) {
+    out << std::endl;   
   }
-  (out << ... << args) << std::endl;
 }
 } // namespace
 
-template <typename... Args>
+template <bool newline = true, typename... Args>
 void info(Args... args) {
-  log(std::cout, args...);
+  log<newline>(std::cout, args...);
 }
 
-template <typename... Args>
+template <bool newline = true, typename... Args>
 void error(Args... args) {
-  log(std::cerr, args...);
+  log<newline>(std::cerr, args...);
 }
 
 } // namespace log

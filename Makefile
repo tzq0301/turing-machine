@@ -11,6 +11,7 @@ build:
 
 test: build
 	@./bin/test_statement_parser
+	@./bin/test_number
 
 clean:
 	rm -rf ./bin
