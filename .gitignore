@@ -3,6 +3,7 @@
 .settings/
 .fleet/
 .cache/
+.obsidian/
 
 bin/
 build/
