@@ -64,7 +64,7 @@ std::optional<std::vector<TapeRecord>> Tape::content(bool reserveHead) {
 
   for (size_t i = 0; i < keys.size(); ++i) {
     int key = keys[i];
-    if (key == head_ || tape_[key] != blank_) {
+    if ((reserveHead && key == head_) || tape_[key] != blank_) {
       firstIndexOfKeys = i;
       break;
     }
@@ -72,7 +72,7 @@ std::optional<std::vector<TapeRecord>> Tape::content(bool reserveHead) {
 
   for (size_t i = keys.size(); i > 0; --i) {
     int key = keys[i - 1];
-    if (key == head_ || tape_[key] != blank_) {
+    if ((reserveHead && key == head_) || tape_[key] != blank_) {
       lastIndexOfKeys = i - 1;
       break;
     }

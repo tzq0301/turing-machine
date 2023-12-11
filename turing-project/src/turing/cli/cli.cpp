@@ -1,6 +1,8 @@
 #include "turing/cli/cli.h"
 
+#include <exception>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <variant>
 #include <vector>
@@ -16,7 +18,8 @@ namespace turing::cli {
 
 Option parseArgs(int argc, const char **argv) {
   static const std::string ILLEGAL_ARGS_MESSAGE = "illegal args";
-  static const std::string HELP_MESSAGE = "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
+  static const std::string HELP_MESSAGE =
+      "usage: turing [-v|--verbose] [-h|--help] <tm> <input>";
 
   if (argc == 1) {
     throw std::invalid_argument(ILLEGAL_ARGS_MESSAGE);
@@ -44,19 +47,23 @@ Option parseArgs(int argc, const char **argv) {
 
   RunOption runOption = {
       .verbose = false,
-      .tm = args[args.size() - 2],
-      .input = args[args.size() - 1],
   };
 
   if (std::find(args.begin(), args.end(), "-v") != args.end() ||
       std::find(args.begin(), args.end(), "--verbose") != args.end()) {
     runOption.verbose = true;
+    if (args.size() < 3) {
+      throw std::invalid_argument(ILLEGAL_ARGS_MESSAGE);
+    }
   }
+
+  runOption.tm = args[args.size() - 2];
+  runOption.input = args[args.size() - 1];
 
   return runOption;
 }
 
-class RunVisitor {
+class CliVisitor {
 public:
   void operator()(const HelpOption &option) {
     std::cout << option.message << "\n";
@@ -78,8 +85,8 @@ public:
 };
 
 void run(const Option &option) {
-  static RunVisitor visitor;
+  static CliVisitor visitor;
   std::visit(visitor, option);
 }
 
-}
+} // namespace turing::cli

@@ -89,7 +89,7 @@ void Machine::run(const std::string &input) {
     }
     auto content = tapes.content();
     if (content.has_value()) {
-      turing::log::info("Result:", " ", tapes.content().value());
+      turing::log::info("Result:", " ", content.value());
     }
     turing::log::info("==================== END ====================");
   } else {
