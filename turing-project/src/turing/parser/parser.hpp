@@ -19,8 +19,7 @@ template <class... Ts> overload(Ts...) -> overload<Ts...>;
 
 class Parser {
 public:
-  explicit Parser(const std::string &filepath)
-      : statements_(turing::util::file::readLines(filepath)), index_(0) {}
+  explicit Parser(const std::string &filepath);
 
   turing::machine::Machine parse() {
     std::unordered_set<std::string> states;

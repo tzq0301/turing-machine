@@ -1,0 +1,163 @@
+{
+  "main": {
+    "id": "cb14ca353dee095e",
+    "type": "split",
+    "children": [
+      {
+        "id": "99e7485f87d9214e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1ff107b36a91d3ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "522023330089-童昭旗.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bd0fd8c568011f78",
+    "type": "split",
+    "children": [
+      {
+        "id": "e1a1d34fa3dbfdb0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3548664e32f9947b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "402740193f2079f5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c9db9d74c1458384",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a51f4983605fe4d5",
+    "type": "split",
+    "children": [
+      {
+        "id": "923d6574f6e3ec81",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "989352602674a173",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "522023330089-童昭旗.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "636d78be9037ec8b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "522023330089-童昭旗.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e66d7928e4f1edae",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "5a6dd3979d5d7ba9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "522023330089-童昭旗.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "1ff107b36a91d3ef",
+  "lastOpenFiles": [
+    "522023330089-童昭旗.pdf",
+    "build/CMakeFiles/test_string.dir/compiler_depend.internal",
+    "build/CMakeFiles/Progress/2",
+    "build/CMakeFiles/Progress/1",
+    "build/CMakeFiles/test_number.dir/compiler_depend.internal",
+    "build/CMakeFiles/Progress/8",
+    "build/CMakeFiles/Progress/7",
+    "build/CMakeFiles/Progress/6",
+    "build/CMakeFiles/Progress/5",
+    "build/CMakeFiles/Progress/4",
+    "build/CMakeFiles/Progress/3"
+  ]
+}
