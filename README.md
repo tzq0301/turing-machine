@@ -3,11 +3,12 @@
 ## How to build?
 
 ```bash
-make
+$ make
 ```
 
 ## How to run?
 
 ```bash
-./bin/turing programs/palindrome_detector_2tapes.tm 1001001
+$ ./bin/turing programs/palindrome_detector_2tapes.tm 1001001
+(ACCEPTED) true
 ```
